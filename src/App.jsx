@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import RunningPage from './pages/Running.jsx'
 import BatTu2026 from './pages/BatTu2026.jsx'
+import TrungManifesto from './pages/TrungManifesto.jsx'
 
 const NAV_ITEMS = [
+  { key: 'manifesto', label: '📜 The Trung Manifesto' },
   { key: 'running', label: '🏃 Chạy Bộ' },
   { key: 'batu', label: '🔮 Bát Tự 2026' },
 ]
 
 export default function App() {
-  const [page, setPage] = useState('running')
+  const [page, setPage] = useState('manifesto')
 
   return (
     <div>
@@ -49,6 +51,7 @@ export default function App() {
         ))}
       </nav>
 
+      {page === 'manifesto' && <TrungManifesto />}
       {page === 'running' && <RunningPage />}
       {page === 'batu' && <BatTu2026 />}
     </div>
