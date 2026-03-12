@@ -3,7 +3,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaCh
 
 const monthsData = [
   {
-    month: "T1", fullMonth: "Tháng 1", canChi: "Canh Dần", score: 7,
+    month: "T1", fullMonth: "Tháng 1", gregorian: "17/2 – 17/3/2026", canChi: "Canh Dần", score: 7,
     element: "Kim / Mộc", thapThan: "Chính Tài + Ấn", emoji: "🌱",
     summary: "Khởi đầu ổn định",
     detail: "Chính Tài Canh Kim xuất hiện — có cơ hội kiếm tiền, thu nhập đến. Dần Mộc sinh Hỏa, năng lượng bản thân được hỗ trợ. Tiền đến nhưng giữ không dễ. Tranh thủ làm việc, tạo nền tảng cho cả năm.",
@@ -11,7 +11,7 @@ const monthsData = [
     taiLoc: 7, sucKhoe: 7, tinhCam: 6, suNghiep: 7,
   },
   {
-    month: "T2", fullMonth: "Tháng 2", canChi: "Tân Mão", score: 7.5,
+    month: "T2", fullMonth: "Tháng 2", gregorian: "18/3 – 16/4/2026", canChi: "Tân Mão", score: 7.5,
     element: "Kim / Mộc", thapThan: "Thiên Tài + Chính Ấn", emoji: "💰",
     summary: "Tài lộc bất ngờ",
     detail: "Thiên Tài Tân Kim — tiền ngoài lương, thu nhập phụ, thưởng, may mắn. Mão trùng trụ tháng sinh, tạo cảm giác quen thuộc. Nhưng Mão Ngọ phá, giữa cơ hội có xáo trộn nhỏ.",
@@ -19,7 +19,7 @@ const monthsData = [
     taiLoc: 8, sucKhoe: 7, tinhCam: 7, suNghiep: 7,
   },
   {
-    month: "T3", fullMonth: "Tháng 3", canChi: "Nhâm Thìn", score: 5.5,
+    month: "T3", fullMonth: "Tháng 3", gregorian: "17/4 – 15/5/2026", canChi: "Nhâm Thìn", score: 5.5,
     element: "Thủy / Thổ", thapThan: "Chính Quan + Thực Thần", emoji: "😤",
     summary: "Áp lực, suy nghĩ nhiều",
     detail: "Chính Quan Nhâm Thủy — áp lực công việc tăng, sếp giao nhiều việc. Thìn trùng trụ giờ sinh tạo phục ngâm — liên quan con cái, hậu vận. Dễ suy nghĩ nhiều, mệt đầu.",
@@ -27,7 +27,7 @@ const monthsData = [
     taiLoc: 5, sucKhoe: 5, tinhCam: 6, suNghiep: 6,
   },
   {
-    month: "T4", fullMonth: "Tháng 4", canChi: "Quý Tỵ", score: 4,
+    month: "T4", fullMonth: "Tháng 4", gregorian: "16/5 – 14/6/2026", canChi: "Quý Tỵ", score: 4,
     element: "Thủy / Hỏa", thapThan: "Thất Sát + Tỷ Kiếp", emoji: "⚠️",
     summary: "Tháng khó nhất năm",
     detail: "Thất Sát Quý Thủy — áp lực mạnh, tiểu nhân, đối đầu. Quý trùng đại vận, áp lực gấp đôi. Tỵ Hợi xung trực tiếp vào nhật chủ — sức khỏe và tinh thần đều bị ảnh hưởng nặng.",
@@ -35,7 +35,7 @@ const monthsData = [
     taiLoc: 3, sucKhoe: 4, tinhCam: 4, suNghiep: 5,
   },
   {
-    month: "T5", fullMonth: "Tháng 5", canChi: "Giáp Ngọ", score: 6,
+    month: "T5", fullMonth: "Tháng 5", gregorian: "15/6 – 13/7/2026", canChi: "Giáp Ngọ", score: 6,
     element: "Mộc / Hỏa", thapThan: "Chính Ấn + Kiếp Tài", emoji: "🔥",
     summary: "Có quý nhân, dễ nóng nảy",
     detail: "Giáp Chính Ấn — quý nhân xuất hiện, học hỏi điều mới. Nhưng Ngọ Hỏa cực vượng trong năm Hỏa — nóng nảy, bốc đồng. Phục ngâm Thái Tuế + trụ năm sinh. Có sức mạnh nhưng dễ quá đà.",
@@ -43,7 +43,7 @@ const monthsData = [
     taiLoc: 6, sucKhoe: 5, tinhCam: 5, suNghiep: 7,
   },
   {
-    month: "T6", fullMonth: "Tháng 6", canChi: "Ất Mùi", score: 6.5,
+    month: "T6", fullMonth: "Tháng 6", gregorian: "14/7 – 11/8/2026", canChi: "Ất Mùi", score: 6.5,
     element: "Mộc / Thổ", thapThan: "Thiên Ấn + Thực Thương", emoji: "🧘",
     summary: "Ổn định, suy ngẫm",
     detail: "Ất Kiêu Ấn — suy nghĩ nhiều, trực giác mạnh. Mùi trùng đại vận Quý Mùi, kích hoạt chủ đề đại vận. Mùi Thổ tiết Hỏa, giảm bớt sức nóng. Tương đối dễ thở, phù hợp lên kế hoạch.",
@@ -51,7 +51,7 @@ const monthsData = [
     taiLoc: 6, sucKhoe: 7, tinhCam: 6, suNghiep: 7,
   },
   {
-    month: "T7", fullMonth: "Tháng 7", canChi: "Bính Thân", score: 8,
+    month: "T7", fullMonth: "Tháng 7", gregorian: "12/8 – 10/9/2026", canChi: "Bính Thân", score: 8,
     element: "Hỏa / Kim", thapThan: "Kiếp Tài + Tài tinh", emoji: "🌟",
     summary: "Tháng tốt nhất năm!",
     detail: "Bính Kiếp Tài + Thân Kim Tài tinh có gốc — tháng tốt nhất về tài lộc. Thân hợp Tỵ tạo liên kết tốt. Tiền bạc thực sự có cơ hội đến. Phải nhanh tay nắm bắt vì Kiếp Tài sẵn sàng tranh giành.",
@@ -59,7 +59,7 @@ const monthsData = [
     taiLoc: 9, sucKhoe: 7, tinhCam: 7, suNghiep: 9,
   },
   {
-    month: "T8", fullMonth: "Tháng 8", canChi: "Đinh Dậu", score: 6,
+    month: "T8", fullMonth: "Tháng 8", gregorian: "11/9 – 10/10/2026", canChi: "Đinh Dậu", score: 6,
     element: "Hỏa / Kim", thapThan: "Tỷ Kiên + Chính Tài", emoji: "⚔️",
     summary: "Tiền có, quan hệ căng",
     detail: "Đinh trùng nhật chủ — phục ngâm nhật can, hoài nghi bản thân. Dậu Kim Chính Tài có gốc, tiền bạc vẫn ổn. Nhưng Mão Dậu xung — ảnh hưởng anh em, bạn bè. Mâu thuẫn với đồng nghiệp hoặc bạn thân.",
@@ -67,7 +67,7 @@ const monthsData = [
     taiLoc: 7, sucKhoe: 6, tinhCam: 5, suNghiep: 6,
   },
   {
-    month: "T9", fullMonth: "Tháng 9", canChi: "Mậu Tuất", score: 6,
+    month: "T9", fullMonth: "Tháng 9", gregorian: "11/10 – 8/11/2026", canChi: "Mậu Tuất", score: 6,
     element: "Thổ / Thổ", thapThan: "Thương Quan + Thực Thương", emoji: "💡",
     summary: "Sáng tạo, cẩn thận lời nói",
     detail: "Thương Quan Mậu Thổ — sáng tạo, nổi loạn, muốn thay đổi. Tuất Thổ khô tiết khí nhật chủ. Nhiều ý tưởng mới nhưng dễ gây mâu thuẫn với cấp trên. Freelance hoặc tự kinh doanh thì tốt.",
@@ -75,7 +75,7 @@ const monthsData = [
     taiLoc: 6, sucKhoe: 6, tinhCam: 6, suNghiep: 7,
   },
   {
-    month: "T10", fullMonth: "Tháng 10", canChi: "Kỷ Hợi", score: 5.5,
+    month: "T10", fullMonth: "Tháng 10", gregorian: "9/11 – 8/12/2026", canChi: "Kỷ Hợi", score: 5.5,
     element: "Thổ / Thủy", thapThan: "Thực Thần + Quan tinh", emoji: "🌊",
     summary: "Tâm trạng bất ổn",
     detail: "Kỷ Thực Thần nhẹ nhàng, ăn uống vui vẻ. Nhưng Hợi trùng trụ ngày sinh — phục ngâm trụ ngày, tâm trạng lên xuống. Có thể có chuyện tình cảm xáo trộn.",
@@ -83,7 +83,7 @@ const monthsData = [
     taiLoc: 5, sucKhoe: 5, tinhCam: 4, suNghiep: 6,
   },
   {
-    month: "T11", fullMonth: "Tháng 11", canChi: "Canh Tý", score: 5,
+    month: "T11", fullMonth: "Tháng 11", gregorian: "9/12/2026 – 7/1/2027", canChi: "Canh Tý", score: 5,
     element: "Kim / Thủy", thapThan: "Chính Tài + Chính Quan", emoji: "🚨",
     summary: "Rủi ro cao, cẩn trọng",
     detail: "Canh Chính Tài + Tý Chính Quan — vừa có tiền vừa có áp lực. Làm nhiều thì được nhiều. Nhưng Tý Ngọ xung Thái Tuế — cẩn thận tai nạn nhỏ, va chạm, kiện tụng. Đừng mạo hiểm.",
@@ -91,7 +91,7 @@ const monthsData = [
     taiLoc: 6, sucKhoe: 4, tinhCam: 5, suNghiep: 6,
   },
   {
-    month: "T12", fullMonth: "Tháng 12", canChi: "Tân Sửu", score: 7,
+    month: "T12", fullMonth: "Tháng 12", gregorian: "8/1 – 5/2/2027", canChi: "Tân Sửu", score: 7,
     element: "Kim / Thổ", thapThan: "Thiên Tài + Thực Thương", emoji: "🎊",
     summary: "Kết năm nhẹ nhàng",
     detail: "Thiên Tài Tân Kim — khoản thu bất ngờ cuối năm, thưởng tết, tiền từ nguồn phụ. Sửu Thổ ôn hòa, tạo sự ổn định. Không xung không phá gì nặng. Kết thúc năm tương đối êm đẹp.",
@@ -271,7 +271,8 @@ export default function BatTu2026() {
               fontFamily: "'Segoe UI', sans-serif",
               boxShadow: selected === i ? "0 2px 8px rgba(200,134,10,0.2)" : "none",
             }}>
-              {m.emoji} {m.month}
+              <div>{m.emoji} {m.month}</div>
+              <div style={{ fontSize: 10, marginTop: 2, opacity: 0.75 }}>{m.gregorian}</div>
             </button>
           ))}
         </div>
@@ -305,7 +306,10 @@ export default function BatTu2026() {
               <h2 style={{ fontSize: 26, fontWeight: 700, margin: 0, color: "#3D2B1F" }}>
                 {current.emoji} {current.fullMonth}
               </h2>
-              <div style={{ fontSize: 12, color: "#A0896E", marginTop: 3, fontFamily: "'Segoe UI', sans-serif" }}>
+              <div style={{ fontSize: 12, color: "#8B6A3E", marginTop: 3, fontFamily: "'Segoe UI', sans-serif", fontStyle: "italic" }}>
+                {current.gregorian}
+              </div>
+              <div style={{ fontSize: 12, color: "#A0896E", marginTop: 2, fontFamily: "'Segoe UI', sans-serif" }}>
                 {current.thapThan}
               </div>
             </div>
