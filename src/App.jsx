@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import RunningPage from './pages/Running.jsx'
 import BatTu2026 from './pages/BatTu2026.jsx'
+import Today from './pages/Today.jsx'
 
 const NAV_ITEMS = [
+  { key: 'today', label: '📅 Hôm Nay' },
   { key: 'running', label: '🏃 Chạy Bộ' },
   { key: 'batu', label: '🔮 Bát Tự 2026' },
 ]
 
 export default function App() {
-  const [page, setPage] = useState('running')
+  const [page, setPage] = useState('today')
 
   return (
     <div>
@@ -49,6 +51,7 @@ export default function App() {
         ))}
       </nav>
 
+      {page === 'today' && <Today />}
       {page === 'running' && <RunningPage />}
       {page === 'batu' && <BatTu2026 />}
     </div>
