@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { getTodayData, ELEMENT_COLORS, ELEMENT_BG } from '../utils/lunar.js';
+import { getTodayData, solarToLunar, lunarDateString, ELEMENT_COLORS, ELEMENT_BG } from '../utils/lunar.js';
 
 const WEEKDAYS = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+const WEEKDAYS_SHORT = ['CN','T2','T3','T4','T5','T6','T7'];
 const MONTHS_VI = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
 
 const QUALITY_CONFIG = {
@@ -90,21 +91,188 @@ function ActivityTag({ text, type }) {
   );
 }
 
+function isSameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+function getLunarDayLabel(sY, sM, sD) {
+  const lunar = solarToLunar(sY, sM, sD);
+  if (lunar.lunarDay === 1) {
+    const ls = lunarDateString(lunar);
+    return ls.monthStr;
+  }
+  const ls = lunarDateString(lunar);
+  return ls.dayStr;
+}
+
+function CalendarGrid({ selectedDate, onSelectDate }) {
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth();
+  const today = new Date();
+
+  const firstDay = new Date(year, month, 1);
+  const startDow = firstDay.getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const prevMonth = () => {
+    const d = new Date(year, month - 1, 1);
+    onSelectDate(d);
+  };
+  const nextMonth = () => {
+    const d = new Date(year, month + 1, 1);
+    onSelectDate(d);
+  };
+
+  const cells = [];
+  // Empty cells before first day
+  for (let i = 0; i < startDow; i++) {
+    cells.push(null);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push(d);
+  }
+
+  return (
+    <div style={{
+      background: '#FFFDF7',
+      border: '1px solid #E8D5B5',
+      borderRadius: 20,
+      padding: '16px 12px',
+      marginBottom: 16,
+      boxShadow: '0 4px 20px rgba(120,80,30,0.06)',
+    }}>
+      <div style={{
+        fontSize: 11, letterSpacing: 3, color: '#B8956A', textTransform: 'uppercase',
+        marginBottom: 12, textAlign: 'center', fontFamily: "'Segoe UI', sans-serif",
+      }}>
+        Lịch Tháng
+      </div>
+
+      {/* Month navigation */}
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        marginBottom: 12, padding: '0 4px',
+      }}>
+        <button onClick={prevMonth} style={{
+          background: 'none', border: '1px solid #D9C9AE', borderRadius: 8,
+          padding: '4px 12px', cursor: 'pointer', fontSize: 16, color: '#8B7355',
+        }}>‹</button>
+        <div style={{
+          fontSize: 15, fontWeight: 700, color: '#5C3310',
+          fontFamily: "'Georgia', serif",
+        }}>
+          {MONTHS_VI[month]} · {year}
+        </div>
+        <button onClick={nextMonth} style={{
+          background: 'none', border: '1px solid #D9C9AE', borderRadius: 8,
+          padding: '4px 12px', cursor: 'pointer', fontSize: 16, color: '#8B7355',
+        }}>›</button>
+      </div>
+
+      {/* Weekday headers */}
+      <div style={{
+        display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2,
+        marginBottom: 4,
+      }}>
+        {WEEKDAYS_SHORT.map((w, i) => (
+          <div key={i} style={{
+            textAlign: 'center', fontSize: 10, fontWeight: 600, color: '#B8956A',
+            padding: '4px 0', fontFamily: "'Segoe UI', sans-serif",
+          }}>
+            {w}
+          </div>
+        ))}
+      </div>
+
+      {/* Day cells */}
+      <div style={{
+        display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 2,
+      }}>
+        {cells.map((day, i) => {
+          if (day === null) {
+            return <div key={i} />;
+          }
+          const cellDate = new Date(year, month, day);
+          const isSelected = isSameDay(cellDate, selectedDate);
+          const isToday = isSameDay(cellDate, today);
+          const lunarLabel = getLunarDayLabel(year, month + 1, day);
+          const isSunday = cellDate.getDay() === 0;
+
+          return (
+            <button
+              key={i}
+              onClick={() => onSelectDate(cellDate)}
+              style={{
+                background: isSelected
+                  ? 'linear-gradient(135deg, #FFF1D0, #FFEAB8)'
+                  : isToday ? '#FAF4E8' : 'transparent',
+                border: isSelected
+                  ? '2px solid #8B4513'
+                  : isToday ? '1px solid #D9C9AE' : '1px solid transparent',
+                borderRadius: 10,
+                padding: '6px 2px 4px',
+                cursor: 'pointer',
+                textAlign: 'center',
+                minHeight: 48,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <div style={{
+                fontSize: 14, fontWeight: isSelected ? 800 : 600,
+                color: isSelected ? '#7A4A0A' : isSunday ? '#C62828' : '#3D2B1F',
+                lineHeight: 1.2,
+              }}>
+                {day}
+              </div>
+              <div style={{
+                fontSize: 8, color: isSelected ? '#8B6A3E' : '#B8956A',
+                lineHeight: 1.2, marginTop: 2,
+                fontFamily: "'Segoe UI', sans-serif",
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: '100%',
+              }}>
+                {lunarLabel}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Today() {
   const [now, setNow] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [data, setData] = useState(() => getTodayData(new Date()));
+  const isToday = isSameDay(selectedDate, new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const d = new Date();
-      setNow(d);
-      // Recompute lunar data if the day changed
-      if (d.getDate() !== data.gregorian.day) {
-        setData(getTodayData(d));
-      }
+      setNow(new Date());
     }, 1000);
     return () => clearInterval(timer);
-  }, [data.gregorian.day]);
+  }, []);
+
+  useEffect(() => {
+    setData(getTodayData(selectedDate));
+  }, [selectedDate]);
+
+  const goToDay = (offset) => {
+    const d = new Date(selectedDate);
+    d.setDate(d.getDate() + offset);
+    setSelectedDate(d);
+  };
+
+  const goToToday = () => {
+    setSelectedDate(new Date());
+  };
 
   const quality = QUALITY_CONFIG[data.officer.quality];
   const dayColor = data.day.color;
@@ -132,7 +300,7 @@ export default function Today() {
             fontSize: 11, letterSpacing: 5, color: '#B8956A', textTransform: 'uppercase',
             marginBottom: 8, fontFamily: "'Segoe UI', sans-serif",
           }}>
-            Lịch Vạn Niên · Hôm Nay
+            Lịch Vạn Niên · {isToday ? 'Hôm Nay' : WEEKDAYS[selectedDate.getDay()]}
           </div>
           <div style={{
             fontSize: 56, fontWeight: 300, color: '#5C3310',
@@ -150,6 +318,42 @@ export default function Today() {
             {String(now.getSeconds()).padStart(2, '0')} giây
           </div>
         </div>
+
+        {/* ===== DAY NAVIGATION ===== */}
+        <div style={{
+          display: 'flex', justifyContent: 'center', alignItems: 'center',
+          gap: 12, marginBottom: 12,
+        }}>
+          <button onClick={() => goToDay(-1)} style={{
+            background: 'none', border: '1px solid #D9C9AE', borderRadius: 12,
+            padding: '8px 16px', cursor: 'pointer', fontSize: 14, fontWeight: 600,
+            color: '#8B7355', fontFamily: "'Segoe UI', sans-serif",
+            transition: 'all 0.15s ease',
+          }}>
+            ‹ Hôm qua
+          </button>
+          {!isToday && (
+            <button onClick={goToToday} style={{
+              background: 'linear-gradient(135deg, #FFF1D0, #FFEAB8)',
+              border: '2px solid #8B4513', borderRadius: 12,
+              padding: '8px 14px', cursor: 'pointer', fontSize: 12, fontWeight: 700,
+              color: '#7A4A0A', fontFamily: "'Segoe UI', sans-serif",
+            }}>
+              Hôm nay
+            </button>
+          )}
+          <button onClick={() => goToDay(1)} style={{
+            background: 'none', border: '1px solid #D9C9AE', borderRadius: 12,
+            padding: '8px 16px', cursor: 'pointer', fontSize: 14, fontWeight: 600,
+            color: '#8B7355', fontFamily: "'Segoe UI', sans-serif",
+            transition: 'all 0.15s ease',
+          }}>
+            Ngày mai ›
+          </button>
+        </div>
+
+        {/* ===== CALENDAR GRID ===== */}
+        <CalendarGrid selectedDate={selectedDate} onSelectDate={setSelectedDate} />
 
         {/* ===== DATE CARD ===== */}
         <div style={{
